@@ -1,0 +1,19 @@
+{
+  "name": "web-scraping-node-api",
+  "version": "1.0.0",
+  "description": "A Web Scraping API using NodeJs and Puppeteer library",
+  "main": "src/server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/brunopavese/web-scraping-node-api.git"
+  },
+  "author": "Bruno Pavese",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/brunopavese/web-scraping-node-api/issues"
+  },
+  "homepage": "https://github.com/brunopavese/web-scraping-node-api#readme"
+}
