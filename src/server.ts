@@ -7,21 +7,20 @@ async function bootstrap() {
   const app = express()
 
   app.get('/', async (req: Request, res: Response): Promise<void> => {
+    const errorRes = {
+      error: true,
+      message: 'An error occurred during scraping 🥲',
+    }
     try {
       const bestSellers: Array<List> | null = await getAmazonBestsellerItems()
 
       if (bestSellers === null) {
-        console.error('An error occurred during scraping 🥲')
-        res.status(500).json({
-          message: 'An error occurred during scraping 🥲',
-        })
+        res.status(500).json(errorRes)
       }
 
       res.status(200).json({ bestSellers })
     } catch {
-      res.status(500).json({
-        message: 'Error fetching Amazon Best Sellers',
-      })
+      res.status(500).json(errorRes)
     }
   })
 
