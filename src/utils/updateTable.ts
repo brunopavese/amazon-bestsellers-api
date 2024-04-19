@@ -1,9 +1,9 @@
 import axios from 'axios'
 import { getAmazonBestsellers } from './amazonScraper'
 import { List, Data } from './types'
+import 'dotenv/config'
 
-const endpointUrl =
-  'https://009i7tpx42.execute-api.sa-east-1.amazonaws.com/update'
+const endpointUrl = `${process.env.API_GATEWAY_ENDPOINT}update`
 
 async function updateTableFromScraper(): Promise<void> {
   try {

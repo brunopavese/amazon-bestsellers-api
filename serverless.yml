@@ -1,4 +1,3 @@
-org: myworkspace
 app: web-scraping-node-api
 service: web-scraping-node-api
 frameworkVersion: "3"
