@@ -19,21 +19,25 @@ export async function getAmazonBestsellerItems(): Promise<List[] | null> {
         element.innerHTML.slice(17),
       )
       const lists = Array.from(document.querySelectorAll('.a-carousel'))
-      return lists.map((list, index) => ({
-        category: titles[index] || '',
-        items: Array.from(list.children)
-          .slice(0, 3)
-          .map((item) => {
-            const url = item
-              .querySelector('.a-link-normal')
-              ?.getAttribute('href')
-            return {
-              name: item.querySelector('span > div')?.textContent || '',
-              price: item.querySelector('span > span')?.textContent || '',
-              url: url ? `https://www.amazon.com.br/${url}` : '',
-            }
-          }),
-      }))
+      return lists.map((list, index) => {
+        let itemId = 1
+        return {
+          category: titles[index] || '',
+          items: Array.from(list.children)
+            .slice(0, 3)
+            .map((item) => {
+              const url = item
+                .querySelector('.a-link-normal')
+                ?.getAttribute('href')
+              return {
+                id: itemId++,
+                name: item.querySelector('span > div')?.textContent || '',
+                price: item.querySelector('span > span')?.textContent || '',
+                url: url ? `https://www.amazon.com.br/${url}` : '',
+              }
+            }),
+        }
+      })
     })
 
     await browser.close()
