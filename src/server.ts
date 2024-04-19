@@ -18,7 +18,7 @@ async function bootstrap() {
         res.status(500).json(errorRes)
       }
 
-      res.status(200).json({ bestSellers })
+      res.status(200).json({ bestSellers, updateDate: new Date() })
     } catch {
       res.status(500).json(errorRes)
     }
