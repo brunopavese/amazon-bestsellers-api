@@ -1,4 +1,5 @@
 export interface Item {
+  id: number
   name: string
   price: string
   url: string
@@ -9,7 +10,7 @@ export interface List {
   items: Array<Item>
 }
 
-export interface UpdateData {
+export interface Data {
   bestSellers: Array<List>
   updateDate: string
 }

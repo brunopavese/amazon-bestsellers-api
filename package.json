@@ -5,9 +5,8 @@
   "main": "./src/server.js",
   "scripts": {
     "build": "rm -rf dist && tsc",
-    "dev": "ts-node-dev ./src/server.ts",
     "deploy": "npm run build && serverless deploy --verbose",
-    "generate": "ts-node ./src/utils/fillDb.ts"
+    "update-table": "ts-node ./src/utils/updateTable.ts"
   },
   "repository": {
     "type": "git",
@@ -32,7 +31,6 @@
     "@types/node": "^20.12.7",
     "eslint": "^8.57.0",
     "ts-node": "^10.9.2",
-    "ts-node-dev": "^2.0.0",
     "typescript": "^5.4.5"
   }
 }

@@ -1,7 +1,7 @@
 import puppeteer from 'puppeteer'
 import { List } from './types'
 
-export async function getAmazonBestsellerItems(): Promise<List[] | null> {
+export async function getAmazonBestsellers(): Promise<List[]> {
   const url = 'https://www.amazon.com.br/bestsellers'
 
   try {
@@ -44,7 +44,6 @@ export async function getAmazonBestsellerItems(): Promise<List[] | null> {
 
     return productsByCategory
   } catch (error) {
-    console.error('An error has occurred:', error)
-    return null
+    throw new Error(`An error occurred during scraping, ${error}`)
   }
 }

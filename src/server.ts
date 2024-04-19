@@ -1,7 +1,7 @@
 import express, { Request, Response } from 'express'
 import { DynamoDB } from 'aws-sdk'
 import serverless from 'serverless-http'
-import { isValidBody } from './utils/isValidBody'
+import { validate } from './utils/dataValidate'
 
 const app = express()
 const dynamodb = new DynamoDB.DocumentClient()
@@ -26,7 +26,9 @@ app.get('/', async (_req: Request, res: Response): Promise<void> => {
       res.status(404).json(errorRes)
     }
 
-    res.status(200).json(result.Item?.data)
+    res
+      .status(200)
+      .json({ data: result.Item?.data, updateDate: result.Item?.updateDate })
   } catch {
     res.status(500).json(errorRes)
   }
@@ -34,34 +36,25 @@ app.get('/', async (_req: Request, res: Response): Promise<void> => {
 
 app.put('/update', async (req: Request, res: Response): Promise<void> => {
   try {
-    // if (!isValidBody(req.body)) {
-    //   res
-    //     .status(400)
-    //     .json({ error: true, message: 'Invalid request body format' })
-    // }
+    if (!validate(req.body)) {
+      res
+        .status(400)
+        .json({ error: true, message: 'Invalid request body format' })
+    }
     const params = {
       TableName: tableName,
-      // Key: { id: '1' },
       Item: {
         id: '1',
         data: req.body.bestSellers,
         updateDate: req.body.updateDate,
       },
-      // UpdateExpression: 'SET #data = :data',
-      // ExpressionAttributeNames: {
-      //   '#data': 'data',
-      // },
-      // ExpressionAttributeValues: {
-      //   ':data': {
-      //     bestSellers: req.body.bestSellers,
-      //     updateDate: req.body.updateDate,
-      //   },
-      // },
     }
 
     await dynamodb.put(params).promise()
 
-    res.status(200).json({ message: 'DB updated successfully', body: req.body })
+    res
+      .status(200)
+      .json({ message: 'DB updated successfully', newData: req.body })
   } catch {
     res
       .status(500)
