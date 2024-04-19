@@ -18,7 +18,7 @@ This project is an API that retrieves the top 3 best-selling items per category 
 This project is a serverless API that extracts the top three best-selling items per category from the Amazon Bestsellers page in Brazil (https://www.amazon.com.br/bestsellers). Using technologies like **Node.js**, **TypeScript**, and **Express.js**, the API is deployed on **AWS Lambda** and configured with **AWS API Gateway** to handle HTTP requests. The data is stored in an **AWS DynamoDB** NoSQL database, where each category has an entry containing the current top three best-selling items.
 
 Data collection from the Amazon page is achieved through web scraping using the [Puppeteer](https://pptr.dev/) library. A local script is run to get web scraping data and update the database with the latest collected data, which consumes the API endpoint through a PUT request using **Axios**.
-![The project's operational scheme](/assets/amazon-bestsellers-api-schema.png)
+![The project's architecture diagram](/assets/amazon-bestsellers-api-schema.png)
 ## Getting Started
 
 To get started with the project, follow these steps:
