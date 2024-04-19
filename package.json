@@ -4,9 +4,10 @@
   "description": "A Web Scraping API using NodeJs and Puppeteer library",
   "main": "./src/server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "tsc",
-    "dev": "ts-node-dev ./src/server.ts"
+    "build": "rm -rf dist && tsc",
+    "dev": "ts-node-dev ./src/server.ts",
+    "deploy": "npm run build && serverless deploy --verbose",
+    "generate": "ts-node ./src/utils/fillDb.ts"
   },
   "repository": {
     "type": "git",
@@ -19,15 +20,18 @@
   },
   "homepage": "https://github.com/brunopavese/web-scraping-node-api#readme",
   "dependencies": {
-    "dotenv": "^16.4.5",
+    "aws-sdk": "^2.1602.0",
+    "axios": "^1.6.8",
     "express": "^4.19.2",
-    "puppeteer": "^22.6.5"
+    "puppeteer": "^22.6.5",
+    "serverless-http": "^3.2.0"
   },
   "devDependencies": {
     "@brunopavese/eslint-config": "^1.0.4",
     "@types/express": "^4.17.21",
     "@types/node": "^20.12.7",
     "eslint": "^8.57.0",
+    "ts-node": "^10.9.2",
     "ts-node-dev": "^2.0.0",
     "typescript": "^5.4.5"
   }

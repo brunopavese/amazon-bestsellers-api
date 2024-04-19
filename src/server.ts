@@ -1,34 +1,58 @@
 import express, { Request, Response } from 'express'
-import { getAmazonBestsellerItems } from './utils/amazonScraper'
-import { List } from './utils/types'
-import 'dotenv/config'
+import { DynamoDB } from 'aws-sdk'
+import serverless from 'serverless-http'
 
-async function bootstrap() {
-  const app = express()
+const app = express()
+const dynamodb = new DynamoDB.DocumentClient()
 
-  app.get('/', async (req: Request, res: Response): Promise<void> => {
-    const errorRes = {
-      error: true,
-      message: 'An error occurred during scraping 🥲',
+const tableName = process.env.DYNAMODB_TABLE_NAME || ''
+
+app.get('/', async (_req: Request, res: Response): Promise<void> => {
+  const errorRes = {
+    error: true,
+    message: 'Error accessing database',
+  }
+  const params: DynamoDB.DocumentClient.UpdateItemInput = {
+    TableName: tableName,
+    Key: { id: 1 },
+  }
+  try {
+    const result = await dynamodb.get(params).promise()
+
+    if (!result) {
+      res.status(404).json(errorRes)
     }
-    try {
-      const bestSellers: Array<List> | null = await getAmazonBestsellerItems()
 
-      if (bestSellers === null) {
-        res.status(500).json(errorRes)
-      }
+    res.status(200).json(result)
+  } catch {
+    res.status(500).json(errorRes)
+  }
+})
 
-      res.status(200).json({ bestSellers, updateDate: new Date() })
-    } catch {
-      res.status(500).json(errorRes)
+app.put('/update', async (req: Request, res: Response): Promise<void> => {
+  try {
+    const params: DynamoDB.DocumentClient.UpdateItemInput = {
+      TableName: tableName,
+      Key: { id: 1 },
+      UpdateExpression: 'SET #data = :data',
+      ExpressionAttributeNames: {
+        '#data': 'data',
+      },
+      ExpressionAttributeValues: {
+        ':data': req.body.data,
+      },
     }
-  })
 
-  app.use(express.json())
+    await dynamodb.update(params).promise()
 
-  app.listen(process.env.PORT, () => {
-    console.log(`🚀 Server ready at: ${process.env.APP_URL}`)
-  })
-}
+    res.status(200).json({ message: 'DB updated successfully' })
+  } catch {
+    res
+      .status(500)
+      .json({ error: true, message: 'Error updating in the database' })
+  }
+})
 
-bootstrap()
+app.use(express.json())
+
+export const handler = serverless(app)
