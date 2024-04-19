@@ -1,9 +1,9 @@
-app: web-scraping-node-api
-service: web-scraping-node-api
+app: amazon-bestsellers-api
+service: amazon-bestsellers-api
 frameworkVersion: "3"
 
 custom:
-  tableName: "bestsellers-table-${sls:stage}"
+  tableName: "amazon-bestsellers-table-${sls:stage}"
   esbuild:
     bundle: true
     minify: false

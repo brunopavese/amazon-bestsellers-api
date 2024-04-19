@@ -1,7 +1,7 @@
 {
-  "name": "web-scraping-node-api",
+  "name": "amazon-bestsellers-api",
   "version": "1.0.0",
-  "description": "A Web Scraping API using NodeJs and Puppeteer library",
+  "description": "A serverless API fetching top Amazon Bestsellers per category, powered by Node.js, TypeScript, Serverless Framework and AWS services",
   "main": "./src/server.js",
   "scripts": {
     "build": "rm -rf dist && tsc",
@@ -10,14 +10,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/brunopavese/web-scraping-node-api.git"
+    "url": "git+https://github.com/brunopavese/amazon-bestsellers-api.git"
   },
   "author": "Bruno Pavese",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/brunopavese/web-scraping-node-api/issues"
+    "url": "https://github.com/brunopavese/amazon-bestsellers-api/issues"
   },
-  "homepage": "https://github.com/brunopavese/web-scraping-node-api#readme",
+  "homepage": "https://github.com/brunopavese/amazon-bestsellers-api#readme",
   "dependencies": {
     "aws-sdk": "^2.1602.0",
     "axios": "^1.6.8",
